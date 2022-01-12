@@ -1,15 +1,17 @@
 from flask import Flask
 
-# 애플리케이션 팩토리
-# create_app 말고 다른걸 사용시 정상 동작하지 않음, create_app은 플라스크 내부에 정의된 함수명
+# hello_pybo는 URL 에서 /로 맵핑
+# app.route('/') 애너테이션이 맵핑을 만들어 줌
+# app.route와 같은 애너테이션으로 매핑되는 함수를 라우트 함수라고 한다.
+# 지금까지 해온걸로는 URL을 추가할때마다 create_app에 추가해줘야한다.
+# 블루프린트를 사용하면 라우트 함수를 구조적으로 관리가 가능하다.
 
 
 def create_app():
     app = Flask(__name__)
 
-    @app.route('/')
-    def hello_pybo():
-        return "Hello Pybo!"
+    from .views import main_views
+    app.register_blueprint(main_views.bp)  # 블루프린트 객체등록
 
     return app
 
